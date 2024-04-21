@@ -1,0 +1,90 @@
+{% extends "base.html" %} {% block content %}
+<div class="row">
+  <div class="col-md-7">
+    <div
+      id="carouselExampleCaptions"
+      class="carousel slide"
+      data-bs-ride="carousel"
+    >
+      <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+          {% for carousel in carousels_data %}
+          <div class="carousel-item {% if forloop.first %}active{% endif %}">
+            <img src="{{ carousel.img.url }}" class="d-block w-100" alt="..." />
+          </div>
+          {% endfor %}
+        </div>
+
+        <a
+          class="carousel-control-prev"
+          href="#myCarousel"
+          role="button"
+          data-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only"></span>
+        </a>
+        <a
+          class="carousel-control-next"
+          href="#myCarousel"
+          role="button"
+          data-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only"></span>
+        </a>
+      </div>
+
+      <button
+        class="carousel-control-prev"
+        type="button"
+        data-bs-target="#carouselExampleCaptions"
+        data-bs-slide="prev"
+      >
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button
+        class="carousel-control-next"
+        type="button"
+        data-bs-target="#carouselExampleCaptions"
+        data-bs-slide="next"
+      >
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+</div>
+<br />
+
+<div class="shirt-heading" style="padding-left: 10px">
+  <h3 class="cas-shirts-heading">{{category_name}} for {{label_name}}</h3>
+</div>
+<br />
+
+<div class="container marketing">
+  <!-- Three columns of text below the carousel -->
+  <div class="row row-cols-2 row-cols-md-4 g-4">
+    {% for i in category_data %}
+    <div class="col">
+      <div class="card h-200">
+        <img src="{{i.img.url}}" class="card-img-top" alt="..." />
+        <div class="card-body">
+          <h5 class="card-title">{{i.name}}</h5>
+          <p class="card-text">Rs. {{i.price}}</p>
+          <form action="{% url 'add-to-cart' i.id %}" method="post"> 
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-danger btn-sm">
+              <span class="bi bi-cart"> </span>Add to cart
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+<br />
+
+{% endblock %}
